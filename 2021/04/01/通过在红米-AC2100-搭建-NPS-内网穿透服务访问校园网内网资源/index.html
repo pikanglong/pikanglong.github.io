@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>通过在红米 AC2100 搭建 NPS 内网穿透服务访问校园网内网资源 | 皮康龙的个人主页</title><meta name="author" content="Carlos Pi"><meta name="copyright" content="Carlos Pi"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="背景女朋友和我都是南京邮电大学本科生。我目前在校内学习，购买了一台红米 AC2100 在宿舍提供网络服务。她目前在上海某公司实习，但需要不时访问校园内网的部分网站，而我校的本科生是没有校内 VPN 的。我校的校园网采用网页端认证的方式，通过在 p.njupt.edu.cn 输入自己的学号和密码登录校园网，由 DHCP 自动分配 IP。 准备材料 红米 AC2100 路由器 2 根网线（一根连接墙上">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通过在红米 AC2100 搭建 NPS 内网穿透服务访问校园网内网资源">
+<meta property="og:url" content="https://pikanglong.com/2021/04/01/%E9%80%9A%E8%BF%87%E5%9C%A8%E7%BA%A2%E7%B1%B3-AC2100-%E6%90%AD%E5%BB%BA-NPS-%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%9C%8D%E5%8A%A1%E8%AE%BF%E9%97%AE%E6%A0%A1%E5%9B%AD%E7%BD%91%E5%86%85%E7%BD%91%E8%B5%84%E6%BA%90/index.html">
+<meta property="og:site_name" content="皮康龙的个人主页">
+<meta property="og:description" content="背景女朋友和我都是南京邮电大学本科生。我目前在校内学习，购买了一台红米 AC2100 在宿舍提供网络服务。她目前在上海某公司实习，但需要不时访问校园内网的部分网站，而我校的本科生是没有校内 VPN 的。我校的校园网采用网页端认证的方式，通过在 p.njupt.edu.cn 输入自己的学号和密码登录校园网，由 DHCP 自动分配 IP。 准备材料 红米 AC2100 路由器 2 根网线（一根连接墙上">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pikanglong.com/2021/04/01/%E9%80%9A%E8%BF%87%E5%9C%A8%E7%BA%A2%E7%B1%B3-AC2100-%E6%90%AD%E5%BB%BA-NPS-%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%9C%8D%E5%8A%A1%E8%AE%BF%E9%97%AE%E6%A0%A1%E5%9B%AD%E7%BD%91%E5%86%85%E7%BD%91%E8%B5%84%E6%BA%90/0.jpg">
+<meta property="article:published_time" content="2021-04-01T04:00:40.000Z">
+<meta property="article:modified_time" content="2021-12-09T04:56:33.372Z">
+<meta property="article:author" content="Carlos Pi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pikanglong.com/2021/04/01/%E9%80%9A%E8%BF%87%E5%9C%A8%E7%BA%A2%E7%B1%B3-AC2100-%E6%90%AD%E5%BB%BA-NPS-%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%9C%8D%E5%8A%A1%E8%AE%BF%E9%97%AE%E6%A0%A1%E5%9B%AD%E7%BD%91%E5%86%85%E7%BD%91%E8%B5%84%E6%BA%90/0.jpg"><link rel="shortcut icon" href="/images/favicon.png"><link rel="canonical" href="https://pikanglong.com/2021/04/01/%E9%80%9A%E8%BF%87%E5%9C%A8%E7%BA%A2%E7%B1%B3-AC2100-%E6%90%AD%E5%BB%BA-NPS-%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%9C%8D%E5%8A%A1%E8%AE%BF%E9%97%AE%E6%A0%A1%E5%9B%AD%E7%BD%91%E5%86%85%E7%BD%91%E8%B5%84%E6%BA%90/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"top-right"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '通过在红米 AC2100 搭建 NPS 内网穿透服务访问校园网内网资源',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-12-09 12:56:33'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/2021/04/01/%E9%80%9A%E8%BF%87%E5%9C%A8%E7%BA%A2%E7%B1%B3-AC2100-%E6%90%AD%E5%BB%BA-NPS-%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%9C%8D%E5%8A%A1%E8%AE%BF%E9%97%AE%E6%A0%A1%E5%9B%AD%E7%BD%91%E5%86%85%E7%BD%91%E8%B5%84%E6%BA%90/0.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">皮康龙的个人主页</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">通过在红米 AC2100 搭建 NPS 内网穿透服务访问校园网内网资源</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-04-01T04:00:40.000Z" title="发表于 2021-04-01 12:00:40">2021-04-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-12-09T04:56:33.372Z" title="更新于 2021-12-09 12:56:33">2021-12-09</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="通过在红米 AC2100 搭建 NPS 内网穿透服务访问校园网内网资源"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>女朋友和我都是南京邮电大学本科生。我目前在校内学习，购买了一台红米 AC2100 在宿舍提供网络服务。她目前在上海某公司实习，但需要不时访问校园内网的部分网站，而我校的本科生是没有校内 VPN 的。我校的校园网采用网页端认证的方式，通过在 p.njupt.edu.cn 输入自己的学号和密码登录校园网，由 DHCP 自动分配 IP。</p>
+<h1 id="准备材料"><a href="#准备材料" class="headerlink" title="准备材料"></a>准备材料</h1><ul>
+<li>红米 AC2100 路由器</li>
+<li>2 根网线（一根连接墙上网口和路由器 WAN 口，一根连接路由器 LAN 口和电脑）</li>
+<li>一台阿里云轻量应用服务器（后文会介绍）</li>
+<li>一个域名</li>
+</ul>
+<h1 id="通过-Breed-给路由器刷入-Openwrt"><a href="#通过-Breed-给路由器刷入-Openwrt" class="headerlink" title="通过 Breed 给路由器刷入 Openwrt"></a>通过 Breed 给路由器刷入 Openwrt</h1><p>这里恩山大佬「寒枫叶」已经写的非常详细了，按照他的教程来就行。我是通过 breed 刷入 openwrt 过渡包，然后再更新为多功能版。</p>
+<p>【Breed】红米AC2100&amp;小米AC2100一键SSH刷Breed和任意固件教程：<a target="_blank" rel="noopener" href="http://openwrt.ink:88/archives/s-breed">http://openwrt.ink:88/archives/s-breed</a></p>
+<p>【0310更新】红米&amp;小米AC2100多功能|精简|AP版下载：<a target="_blank" rel="noopener" href="http://openwrt.ink:88/archives/openwrt-ac2100">http://openwrt.ink:88/archives/openwrt-ac2100</a></p>
+<h1 id="购买阿里云轻量应用服务器并部署-NPS"><a href="#购买阿里云轻量应用服务器并部署-NPS" class="headerlink" title="购买阿里云轻量应用服务器并部署 NPS"></a>购买阿里云轻量应用服务器并部署 NPS</h1><p>找了半天学生机没找到在哪里，问了下客服发现变成「<a target="_blank" rel="noopener" href="https://developer.aliyun.com/plan/grow-up">开发者成长计划</a>」了。购买「轻量应用服务器 1核2G」即可，大概是 10 元一个月。由于我在南京，她在上海，所以服务器机房选择了上海。这里要注意系统镜像要选择「CentOS 7」，据说兼容性会好一些，但是我自己没有精力测试。</p>
+<p>购买完成后进入轻量应用服务器管理控制台，在左侧服务器运维——远程连接中，设置 SSH 密码。</p>
+<p><img src="1.png" alt="1"></p>
+<p>通过 Xshell 和 Xftp 连接服务器。在 <a target="_blank" rel="noopener" href="https://github.com/ehang-io/nps/releases/tag/v0.26.6">NPS 的 release 页面</a>下载 v0.26.6 的 linux_amd64_server.tar.gz。将此文件上传至阿里云服务器，然后解压：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf linux_amd64_server.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>为什么是 v0.26.6 而不是最新版呢？这个问题我后文会解释。</p>
+<p>解压完需要安装并启动，执行命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo nps install</span><br><span class="line">sudo nps start</span><br></pre></td></tr></table></figure>
+
+<p>此时回到阿里云轻量应用服务器管理控制台，打开 8080 和 8024 端口。</p>
+<p><img src="2.png" alt="2"></p>
+<p>访问 ip:8080 进入 NPS 的 web 管理页面。初始用户名是 admin，密码是 123。</p>
+<p><img src="3.png" alt="3"></p>
+<p>显然，初始密码是非常不安全的，需要我们修改配置文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/nps/conf</span><br><span class="line">vim nps.conf</span><br></pre></td></tr></table></figure>
+
+<p>将配置文件中默认的 public_key、web_password、auth_crypt_key 修改掉。</p>
+<p>用新密码登录 NPS 后台，点击左侧菜单「客户端」，点击上方的「新增」。「备注」填写客户端的名称，我填写的「openwrt」。「Basic 认证用户名和密码」留空，「唯一验证密钥」可以手动填写也可以留空自动生成，剩余的选项皆选择「是」。点击「新增」，此时客户端列表应该多出一条你刚刚创建的客户端，连接状态为离线。</p>
+<h1 id="在路由器上下载-NPC"><a href="#在路由器上下载-NPC" class="headerlink" title="在路由器上下载 NPC"></a>在路由器上下载 NPC</h1><p>如果你观察了 NPS 的 release 页面，你会发现每一个系统及架构同时拥有一个 server 端和一个 client 端。server 端部署在阿里云服务器上，而 client 端就部署在路由器上。</p>
+<p><strong>但是等等！</strong>还记得上文说应该使用 v0.26.6 而不是最新版吗？原因是这样的：红米 AC2100 使用的芯片是 mipsle 架构，而经过我的亲自测试，直接从 release 页面下载 linux_mipsle_client.tar.gz 是无法在该路由器上正常运行的，会报「Illegal instruction」错误。这个问题在 <a target="_blank" rel="noopener" href="https://github.com/ehang-io/nps/issues/97">issue #97</a> 中进行了讨论。</p>
+<p>解决方案为<a target="_blank" rel="noopener" href="https://github.com/nwct/downloads/blob/master/nps/linux-mipsle/0.26.6/npc">下载 GitHub 用户 nwct 编译的版本</a>。该用户没有对每个版本进行编译，目前的最新版本是 v0.26.6。你可以选择下载到本机，然后通过 SCP 工具上传到路由器，用户名为 root，密码为登录 192.168.2.1 的密码，初始为 password。也可以选择在路由器上使用 wget 命令获取。</p>
+<h1 id="在路由器上启用-NPC"><a href="#在路由器上启用-NPC" class="headerlink" title="在路由器上启用 NPC"></a>在路由器上启用 NPC</h1><p>还记得我们在阿里云服务器上部署的 NPS 吗？再回到 ip:8080，登录之后点击左侧客户端，右侧应该会出现我们之前添加的一条记录。点击记录左边的加号。</p>
+<p><img src="4.png" alt="4"></p>
+<p>复制客户端命令。</p>
+<p><img src="5.png" alt="5"></p>
+<p>打开 Xshell 等 SSH 工具，连接路由器。地址为 192.168.2.1，端口 22，用户名 root，密码为登录 192.168.2.1 网页的密码，初始为 password。执行命令 nohup + 之前复制的客户端命令。大致如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup ./npc -server=106.14.143.219:8024 -vkey=****** -type=tcp</span><br></pre></td></tr></table></figure>
+
+<p>执行完就可以关闭终端了，切记不要使用 Ctrl + C 中断。</p>
+<p>如果一切正常，NPS 的客户端连接状态就会由离线变为在线，就像我上面两个图一样。</p>
+<h1 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h1><p>打开阿里云域名控制台，或其他任何域名代理商，为域名添加两条 A 型解析，主机记录一个为 * 一个为 @，记录值为轻量应用服务器的 IP。</p>
+<p><img src="6.png" alt="6"></p>
+<p>回到 NPS 后台管理页面，点击左侧域名解析，在右侧菜单中点击新增。客户端 ID 为「左侧菜单中的，客户端中的，之前添加的那条记录的 ID」，备注可以填写为要访问的内网网站标题，主机填写刚才在阿里云解析的域名或二级域名，模式和 URL 路由不变，目标填写要访问的内网网站及端口，例如我要访问 180.209.64.62:80。没有特殊需求的话请求头和请求主机都不需要修改。点击新增。</p>
+<p>这样，你就能在域名解析中看到一条刚刚添加的记录。</p>
+<p><img src="7.png" alt="7"></p>
+<h1 id="接下来就是见证奇迹的时刻"><a href="#接下来就是见证奇迹的时刻" class="headerlink" title="接下来就是见证奇迹的时刻"></a>接下来就是见证奇迹的时刻</h1><p>访问域名，你将会看到原本只有在校园内网中才能访问的网站。</p>
+<p><img src="8.png" alt="8"></p>
+<h1 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h1><p>读完此文，你也许有一些疑问，我也有一些话想说。</p>
+<p>为什么不使用 FRP？<br>因为在我的眼中，NPS 一定程度上是 FRP 的加强版，而且其跑在这台 128M 内存的路由器上一点儿也不卡。</p>
+<p>为什么不用 LuCI 版本的 NPS？<br>我确实安装过 luci-app-nps，但是不知道为什么，不管我怎么操作，NPS 就是运行不起来。如果有启动成功的同学欢迎在评论区留言。</p>
+<p>路由器断电重启怎么办？<br>可以把 NPC 注册为服务，开机自启。</p>
+<p>有没有更好的方法？<br>我最初的想法是在校园网网络中心的一台服务器上搭建一个内网 VPN。但是那台服务器不方便我瞎搞，最后作罢。我宿舍还摆着一台闲置的台式机，如果通过网线将路由器和台式机连接起来，然后将 client 端部署在我的台式机上也许会有更强大的性能表现。但是我宿舍有 4 部手机、3 台电脑、显示器、平板、音箱、智能家居等等……插座已经插不下了，这也是台式机闲置的原因。</p>
+<p>为什么我绑定的域名叫 stardline.com？<br>我温柔善良美丽可爱的女朋友曾梦想着创立一家叫「星列」的文化公司，「stardline」是她为其翻译的英文名。这个域名给她使用再合适不过了。</p>
+</article><div class="tag_share"><div class="post_share"><div class="social-share" data-image="/2021/04/01/%E9%80%9A%E8%BF%87%E5%9C%A8%E7%BA%A2%E7%B1%B3-AC2100-%E6%90%AD%E5%BB%BA-NPS-%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%9C%8D%E5%8A%A1%E8%AE%BF%E9%97%AE%E6%A0%A1%E5%9B%AD%E7%BD%91%E5%86%85%E7%BD%91%E8%B5%84%E6%BA%90/0.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/07/26/%E5%8D%97%E4%BA%AC%E7%A6%84%E5%8F%A3%E6%9C%BA%E5%9C%BA%E7%B3%BB%E5%88%97%E7%96%AB%E6%83%85%E6%B1%87%E6%80%BB/"><img class="prev-cover" src="/2021/07/26/%E5%8D%97%E4%BA%AC%E7%A6%84%E5%8F%A3%E6%9C%BA%E5%9C%BA%E7%B3%BB%E5%88%97%E7%96%AB%E6%83%85%E6%B1%87%E6%80%BB/covid.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">南京禄口机场系列疫情汇总</div></div></a></div><div class="next-post pull-right"><a href="/2020/09/29/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-Android-8-%E9%80%9A%E7%9F%A5-Notification-%E4%B8%8D%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/"><img class="next-cover" src="/2020/09/29/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-Android-8-%E9%80%9A%E7%9F%A5-Notification-%E4%B8%8D%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/android-notification.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">如何解决 Android 8 通知 Notification 不显示的问题</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Carlos Pi</div><div class="author-info__description">对计算机软件开发技术执着且热爱，有一个美丽善良的游戏策划做女票。</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/pikanglong"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">忙着考研，博客停更。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E6%9D%90%E6%96%99"><span class="toc-number">2.</span> <span class="toc-text">准备材料</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-Breed-%E7%BB%99%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7%E5%85%A5-Openwrt"><span class="toc-number">3.</span> <span class="toc-text">通过 Breed 给路由器刷入 Openwrt</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B4%AD%E4%B9%B0%E9%98%BF%E9%87%8C%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%B9%B6%E9%83%A8%E7%BD%B2-NPS"><span class="toc-number">4.</span> <span class="toc-text">购买阿里云轻量应用服务器并部署 NPS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9C%A8%E8%B7%AF%E7%94%B1%E5%99%A8%E4%B8%8A%E4%B8%8B%E8%BD%BD-NPC"><span class="toc-number">5.</span> <span class="toc-text">在路由器上下载 NPC</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9C%A8%E8%B7%AF%E7%94%B1%E5%99%A8%E4%B8%8A%E5%90%AF%E7%94%A8-NPC"><span class="toc-number">6.</span> <span class="toc-text">在路由器上启用 NPC</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90"><span class="toc-number">7.</span> <span class="toc-text">域名解析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8E%A5%E4%B8%8B%E6%9D%A5%E5%B0%B1%E6%98%AF%E8%A7%81%E8%AF%81%E5%A5%87%E8%BF%B9%E7%9A%84%E6%97%B6%E5%88%BB"><span class="toc-number">8.</span> <span class="toc-text">接下来就是见证奇迹的时刻</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">9.</span> <span class="toc-text">写在最后</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/08/20/%E5%8D%97%E4%BA%AC%E9%82%AE%E7%94%B5%E5%A4%A7%E5%AD%A6%E6%9A%91%E6%9C%9F%E5%AD%A6%E6%A0%A1%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93%E2%80%94%E2%80%94%E5%9B%9E%E6%9C%9B%E6%9A%91%E6%9C%9F%E5%AD%A6%E6%A0%A1/" title="南京邮电大学暑期学校学习总结——回望暑期学校"><img src="/2021/08/20/%E5%8D%97%E4%BA%AC%E9%82%AE%E7%94%B5%E5%A4%A7%E5%AD%A6%E6%9A%91%E6%9C%9F%E5%AD%A6%E6%A0%A1%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93%E2%80%94%E2%80%94%E5%9B%9E%E6%9C%9B%E6%9A%91%E6%9C%9F%E5%AD%A6%E6%A0%A1/summer%20school.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="南京邮电大学暑期学校学习总结——回望暑期学校"/></a><div class="content"><a class="title" href="/2021/08/20/%E5%8D%97%E4%BA%AC%E9%82%AE%E7%94%B5%E5%A4%A7%E5%AD%A6%E6%9A%91%E6%9C%9F%E5%AD%A6%E6%A0%A1%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93%E2%80%94%E2%80%94%E5%9B%9E%E6%9C%9B%E6%9A%91%E6%9C%9F%E5%AD%A6%E6%A0%A1/" title="南京邮电大学暑期学校学习总结——回望暑期学校">南京邮电大学暑期学校学习总结——回望暑期学校</a><time datetime="2021-08-20T14:00:00.000Z" title="发表于 2021-08-20 22:00:00">2021-08-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/26/%E5%8D%97%E4%BA%AC%E7%A6%84%E5%8F%A3%E6%9C%BA%E5%9C%BA%E7%B3%BB%E5%88%97%E7%96%AB%E6%83%85%E6%B1%87%E6%80%BB/" title="南京禄口机场系列疫情汇总"><img src="/2021/07/26/%E5%8D%97%E4%BA%AC%E7%A6%84%E5%8F%A3%E6%9C%BA%E5%9C%BA%E7%B3%BB%E5%88%97%E7%96%AB%E6%83%85%E6%B1%87%E6%80%BB/covid.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="南京禄口机场系列疫情汇总"/></a><div class="content"><a class="title" href="/2021/07/26/%E5%8D%97%E4%BA%AC%E7%A6%84%E5%8F%A3%E6%9C%BA%E5%9C%BA%E7%B3%BB%E5%88%97%E7%96%AB%E6%83%85%E6%B1%87%E6%80%BB/" title="南京禄口机场系列疫情汇总">南京禄口机场系列疫情汇总</a><time datetime="2021-07-26T11:26:08.000Z" title="发表于 2021-07-26 19:26:08">2021-07-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/01/%E9%80%9A%E8%BF%87%E5%9C%A8%E7%BA%A2%E7%B1%B3-AC2100-%E6%90%AD%E5%BB%BA-NPS-%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%9C%8D%E5%8A%A1%E8%AE%BF%E9%97%AE%E6%A0%A1%E5%9B%AD%E7%BD%91%E5%86%85%E7%BD%91%E8%B5%84%E6%BA%90/" title="通过在红米 AC2100 搭建 NPS 内网穿透服务访问校园网内网资源"><img src="/2021/04/01/%E9%80%9A%E8%BF%87%E5%9C%A8%E7%BA%A2%E7%B1%B3-AC2100-%E6%90%AD%E5%BB%BA-NPS-%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%9C%8D%E5%8A%A1%E8%AE%BF%E9%97%AE%E6%A0%A1%E5%9B%AD%E7%BD%91%E5%86%85%E7%BD%91%E8%B5%84%E6%BA%90/0.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="通过在红米 AC2100 搭建 NPS 内网穿透服务访问校园网内网资源"/></a><div class="content"><a class="title" href="/2021/04/01/%E9%80%9A%E8%BF%87%E5%9C%A8%E7%BA%A2%E7%B1%B3-AC2100-%E6%90%AD%E5%BB%BA-NPS-%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%9C%8D%E5%8A%A1%E8%AE%BF%E9%97%AE%E6%A0%A1%E5%9B%AD%E7%BD%91%E5%86%85%E7%BD%91%E8%B5%84%E6%BA%90/" title="通过在红米 AC2100 搭建 NPS 内网穿透服务访问校园网内网资源">通过在红米 AC2100 搭建 NPS 内网穿透服务访问校园网内网资源</a><time datetime="2021-04-01T04:00:40.000Z" title="发表于 2021-04-01 12:00:40">2021-04-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/29/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-Android-8-%E9%80%9A%E7%9F%A5-Notification-%E4%B8%8D%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/" title="如何解决 Android 8 通知 Notification 不显示的问题"><img src="/2020/09/29/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-Android-8-%E9%80%9A%E7%9F%A5-Notification-%E4%B8%8D%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/android-notification.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="如何解决 Android 8 通知 Notification 不显示的问题"/></a><div class="content"><a class="title" href="/2020/09/29/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-Android-8-%E9%80%9A%E7%9F%A5-Notification-%E4%B8%8D%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/" title="如何解决 Android 8 通知 Notification 不显示的问题">如何解决 Android 8 通知 Notification 不显示的问题</a><time datetime="2020-09-29T10:14:09.000Z" title="发表于 2020-09-29 18:14:09">2020-09-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/17/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-Android-8-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%9D%99%E6%80%81%E5%B9%BF%E6%92%AD%E6%8E%A5%E5%8F%97%E4%B8%8D%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" title="如何解决 Android 8 自定义静态广播接受不到的问题"><img src="/2020/09/17/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-Android-8-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%9D%99%E6%80%81%E5%B9%BF%E6%92%AD%E6%8E%A5%E5%8F%97%E4%B8%8D%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/broadcast.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="如何解决 Android 8 自定义静态广播接受不到的问题"/></a><div class="content"><a class="title" href="/2020/09/17/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-Android-8-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%9D%99%E6%80%81%E5%B9%BF%E6%92%AD%E6%8E%A5%E5%8F%97%E4%B8%8D%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" title="如何解决 Android 8 自定义静态广播接受不到的问题">如何解决 Android 8 自定义静态广播接受不到的问题</a><time datetime="2020-09-16T16:35:50.000Z" title="发表于 2020-09-17 00:35:50">2020-09-17</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/2021/04/01/%E9%80%9A%E8%BF%87%E5%9C%A8%E7%BA%A2%E7%B1%B3-AC2100-%E6%90%AD%E5%BB%BA-NPS-%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%9C%8D%E5%8A%A1%E8%AE%BF%E9%97%AE%E6%A0%A1%E5%9B%AD%E7%BD%91%E5%86%85%E7%BD%91%E8%B5%84%E6%BA%90/0.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2022 By Carlos Pi</div><div class="footer_custom_text"><a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener">苏ICP备18053774号-1</a><img src="/images/police_icon.png" alt="备案图标" width="20" height="20"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32070502010653" target="_blank" rel="noopener">苏公网安备32070502010653号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>function addGitalkSource () {
+  const ele = document.createElement('link')
+  ele.rel = 'stylesheet'
+  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
+  document.getElementsByTagName('head')[0].appendChild(ele)
+}
+
+function loadGitalk () {
+  function initGitalk () {
+    var gitalk = new Gitalk(Object.assign({
+      clientID: '29c506f3f500f87bf648',
+      clientSecret: 'a85ec212bee81d9d4806e122baf4a3c0e400388e',
+      repo: 'pikanglong.github.io',
+      owner: 'pikanglong',
+      admin: ['pikanglong'],
+      id: 'ca7e7fd2ca5102057648c979dcab2d44',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  if (typeof Gitalk === 'function') initGitalk()
+  else {
+    addGitalkSource()
+    getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js').then(initGitalk)
+  }
+}
+
+function commentCount(n){
+  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+  if (isCommentCount) {
+    isCommentCount.innerHTML= n
+  }
+}
+
+if ('Gitalk' === 'Gitalk' || !false) {
+  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+  else loadGitalk()
+} else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
